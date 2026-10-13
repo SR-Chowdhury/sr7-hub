@@ -25,7 +25,7 @@ function Footer() {
             GitHub
           </a>
           <a
-            href="https://sr-chowdhury.github.io/SR7_Deface_V2/"
+            href="https://sr7-portfolio.vercel.app/"
             target="_blank"
             rel="noreferrer"
             className="text-sm text-[#8b98a8] hover:text-[#00e07a] transition-colors"
