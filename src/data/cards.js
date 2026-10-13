@@ -24,7 +24,7 @@ export const cards = [
     description: 'VulnOS 2 compromised from reconnaissance to root. Full step-by-step guide.',
     tags: ['VulnOS 2', 'Boot2Root'],
     aliases: ['vulnhub', 'vuln hub', 'vulnos', 'vulnos2', 'vulnos 2', 'drupal'],
-    link: '#',
+    link: '/vulnhub',
   },
   {
     id: 'wordpress',

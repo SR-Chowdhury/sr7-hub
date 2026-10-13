@@ -5,6 +5,7 @@ import Hero from './components/Hero'
 import CardGrid from './components/CardGrid'
 import Footer from './components/Footer'
 import PortSwigger from './pages/PortSwigger'
+import VulnHub from './pages/VulnHub'
 import { cards } from './data/cards'
 import { createSearchEngine } from './utils/search'
 
@@ -40,6 +41,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/portswigger" element={<PortSwigger />} />
+          <Route path="/vulnhub" element={<VulnHub />} />
         </Routes>
         <Footer />
       </div>
