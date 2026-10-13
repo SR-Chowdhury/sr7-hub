@@ -6,7 +6,7 @@ export const cards = [
     description: 'All 61 Apprentice labs documented with payload, exploitation steps, and remediation.',
     tags: ['61 Labs', 'Web Security'],
     aliases: ['ps', 'port swigger', 'web security academy', 'burp', 'burp suite', 'apprentice'],
-    link: '#',
+    link: '/portswigger',
   },
   {
     id: 'htb',

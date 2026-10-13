@@ -1,15 +1,16 @@
 import { useState, useMemo } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import CardGrid from './components/CardGrid'
 import Footer from './components/Footer'
+import PortSwigger from './pages/PortSwigger'
 import { cards } from './data/cards'
 import { createSearchEngine } from './utils/search'
 
-// Build the search engine once
 const search = createSearchEngine(cards)
 
-function App() {
+function Home() {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredCards = useMemo(
@@ -18,8 +19,7 @@ function App() {
   )
 
   return (
-    <div className="min-h-screen bg-[#0a0e17] text-white flex flex-col">
-      <Navbar />
+    <>
       <Hero
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -28,8 +28,22 @@ function App() {
       <div className="flex-grow">
         <CardGrid filteredCards={filteredCards} />
       </div>
-      <Footer />
-    </div>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="min-h-screen bg-[#0a0e17] text-white flex flex-col">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/portswigger" element={<PortSwigger />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   )
 }
 
