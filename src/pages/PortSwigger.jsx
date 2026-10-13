@@ -1,10 +1,12 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import FilterBar from '../components/FilterBar'
 import LabCard from '../components/LabCard'
+import Pagination from '../components/Pagination'
 import { portswiggerLabs } from '../data/portswiggerLabs'
 
 const MAX_QUERY_LENGTH = 100
+const ITEMS_PER_PAGE = 5
 
 function sanitize(raw) {
   if (typeof raw !== 'string') return ''
@@ -29,7 +31,9 @@ function PortSwigger() {
   const [searchQuery, setSearchQuery] = useState('')
   const [difficulty, setDifficulty] = useState('all')
   const [category, setCategory] = useState('all')
+  const [currentPage, setCurrentPage] = useState(1)
 
+  // Filter + score
   const filteredLabs = useMemo(() => {
     const query = sanitize(searchQuery)
 
@@ -44,6 +48,23 @@ function PortSwigger() {
       .sort((a, b) => b.score - a.score)
       .map(({ lab }) => lab)
   }, [searchQuery, difficulty, category])
+
+  // Reset to page 1 on filter change
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchQuery, difficulty, category])
+
+  // Pagination math
+  const totalPages = Math.max(1, Math.ceil(filteredLabs.length / ITEMS_PER_PAGE))
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const pagedLabs = filteredLabs.slice(startIndex, endIndex)
+
+  const handlePageChange = (page) => {
+    if (page < 1 || page > totalPages) return
+    setCurrentPage(page)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto px-6 pt-16 pb-20 overflow-hidden">
@@ -91,11 +112,19 @@ function PortSwigger() {
           No labs match your filters. Try a different keyword.
         </p>
       ) : (
-        <div className="flex flex-col gap-5 w-full max-w-full min-w-0">
-          {filteredLabs.map((lab) => (
-            <LabCard key={lab.id} {...lab} />
-          ))}
-        </div>
+        <>
+          <div className="flex flex-col gap-5 w-full max-w-full min-w-0">
+            {pagedLabs.map((lab) => (
+              <LabCard key={lab.id} {...lab} />
+            ))}
+          </div>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </>
       )}
 
     </div>
