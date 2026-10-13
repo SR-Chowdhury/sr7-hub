@@ -8,6 +8,7 @@ import ScrollToTop from './components/ScrollToTop'
 import PortSwigger from './pages/PortSwigger'
 import VulnHub from './pages/VulnHub'
 import HTB from './pages/HTB'
+import WordPressAudit from './pages/WordPressAudit' 
 import { cards } from './data/cards'
 import { createSearchEngine } from './utils/search'
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/portswigger" element={<PortSwigger />} />
           <Route path="/vulnhub" element={<VulnHub />} />
           <Route path="/htb" element={<HTB />} />
+          <Route path="/wordpress-audit" element={<WordPressAudit />} />
         </Routes>
         <Footer />
         <ScrollToTop />
