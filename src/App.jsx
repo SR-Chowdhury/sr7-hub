@@ -4,8 +4,10 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import CardGrid from './components/CardGrid'
 import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 import PortSwigger from './pages/PortSwigger'
 import VulnHub from './pages/VulnHub'
+import HTB from './pages/HTB'
 import { cards } from './data/cards'
 import { createSearchEngine } from './utils/search'
 
@@ -42,8 +44,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/portswigger" element={<PortSwigger />} />
           <Route path="/vulnhub" element={<VulnHub />} />
+          <Route path="/htb" element={<HTB />} />
         </Routes>
         <Footer />
+        <ScrollToTop />
       </div>
     </BrowserRouter>
   )

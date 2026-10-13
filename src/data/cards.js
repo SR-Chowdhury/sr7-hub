@@ -15,7 +15,7 @@ export const cards = [
     description: '7 machines solved. From Telnet and FTP to SMB and MySQL exploitation.',
     tags: ['7 Machines', 'Boot2Root'],
     aliases: ['htb', 'hackthebox', 'hack the box', 'box', 'machine'],
-    link: '#',
+    link: '/htb',
   },
   {
     id: 'vulnhub',
