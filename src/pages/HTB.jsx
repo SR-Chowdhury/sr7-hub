@@ -2,7 +2,10 @@ import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import MachineCard from '../components/MachineCard'
 import Pagination from '../components/Pagination'
-import { htbMachines } from '../data/htbMachines'
+import Loader from '../components/Loader'
+import ErrorBox from '../components/ErrorBox'
+import { machines } from '../lib/api'
+import { useResource } from '../lib/useResource'
 
 const MAX_QUERY_LENGTH = 100
 const ITEMS_PER_PAGE = 5
@@ -19,15 +22,20 @@ function sanitize(raw) {
 function scoreMachine(machine, query) {
   if (query === '') return 1
   let score = 0
-  if (machine.machineName.toLowerCase().includes(query)) score += 10
-  if (machine.os.toLowerCase().includes(query)) score += 8
-  if (machine.difficulty.toLowerCase().includes(query)) score += 6
-  if (machine.summary.toLowerCase().includes(query)) score += 4
-  if (machine.tools.some((t) => t.toLowerCase().includes(query))) score += 3
+  if (machine.machineName?.toLowerCase().includes(query)) score += 10
+  if (machine.os?.toLowerCase().includes(query)) score += 8
+  if (machine.difficulty?.toLowerCase().includes(query)) score += 6
+  if (machine.summary?.toLowerCase().includes(query)) score += 4
+  if (machine.tools?.some((t) => t.toLowerCase().includes(query))) score += 3
   return score
 }
 
 function HTB() {
+  const { data: htbMachines = [], loading, error } = useResource(
+    () => machines.list({ limit: 500 }),
+    []
+  )
+
   const [searchQuery, setSearchQuery] = useState('')
   const [difficulty, setDifficulty] = useState('all')
   const [os, setOs] = useState('all')
@@ -46,7 +54,7 @@ function HTB() {
       })
       .sort((a, b) => b.score - a.score)
       .map(({ machine }) => machine)
-  }, [searchQuery, difficulty, os])
+  }, [htbMachines, searchQuery, difficulty, os])
 
   useEffect(() => {
     setCurrentPage(1)
@@ -62,6 +70,9 @@ function HTB() {
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  if (loading) return <Loader label="Loading machines…" />
+  if (error) return <ErrorBox error={error} />
 
   return (
     <div className="w-full max-w-7xl mx-auto px-6 pt-16 pb-20 overflow-hidden">
@@ -81,7 +92,7 @@ function HTB() {
           Hack The Box Solutions
         </h1>
         <p className="text-[#8b98a8] text-base max-w-2xl mx-auto mb-8">
-          7 machines solved. From Telnet and FTP to SMB and MySQL exploitation. Full methodology documented.
+          {htbMachines.length} machines solved. From Telnet and FTP to SMB and MySQL exploitation. Full methodology documented.
         </p>
 
         <div className="flex justify-center gap-10 flex-wrap">
@@ -91,7 +102,6 @@ function HTB() {
         </div>
       </div>
 
-      {/* Filter bar */}
       <section className="max-w-6xl mx-auto py-5">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-3">
           <input

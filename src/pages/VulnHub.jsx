@@ -2,7 +2,10 @@ import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import WalkthroughCard from '../components/WalkthroughCard'
 import Pagination from '../components/Pagination'
-import { vulnhubWalkthroughs } from '../data/vulnhubWalkthroughs'
+import Loader from '../components/Loader'
+import ErrorBox from '../components/ErrorBox'
+import { walkthroughs } from '../lib/api'
+import { useResource } from '../lib/useResource'
 
 const MAX_QUERY_LENGTH = 100
 const ITEMS_PER_PAGE = 5
@@ -19,19 +22,23 @@ function sanitize(raw) {
 function scoreMachine(machine, query) {
   if (query === '') return 1
   let score = 0
-  if (machine.machineName.toLowerCase().includes(query)) score += 10
-  if (machine.difficulty.toLowerCase().includes(query)) score += 8
-  if (machine.os.toLowerCase().includes(query)) score += 6
-  if (machine.summary.toLowerCase().includes(query)) score += 4
-  if (machine.tools.some((t) => t.toLowerCase().includes(query))) score += 3
+  if (machine.machineName?.toLowerCase().includes(query)) score += 10
+  if (machine.difficulty?.toLowerCase().includes(query)) score += 8
+  if (machine.os?.toLowerCase().includes(query)) score += 6
+  if (machine.summary?.toLowerCase().includes(query)) score += 4
+  if (machine.tools?.some((t) => t.toLowerCase().includes(query))) score += 3
   return score
 }
 
 function VulnHub() {
+  const { data: vulnhubWalkthroughs = [], loading, error } = useResource(
+    () => walkthroughs.list({ limit: 500 }),
+    []
+  )
+
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
-  // Filter + score
   const filteredMachines = useMemo(() => {
     const query = sanitize(searchQuery)
     return vulnhubWalkthroughs
@@ -39,14 +46,12 @@ function VulnHub() {
       .filter(({ score }) => query === '' || score > 0)
       .sort((a, b) => b.score - a.score)
       .map(({ machine }) => machine)
-  }, [searchQuery])
+  }, [vulnhubWalkthroughs, searchQuery])
 
-  // Reset to page 1 when search changes
   useEffect(() => {
     setCurrentPage(1)
   }, [searchQuery])
 
-  // Pagination math
   const totalPages = Math.max(1, Math.ceil(filteredMachines.length / ITEMS_PER_PAGE))
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
   const endIndex = startIndex + ITEMS_PER_PAGE
@@ -57,6 +62,9 @@ function VulnHub() {
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  if (loading) return <Loader label="Loading walkthroughs…" />
+  if (error) return <ErrorBox error={error} />
 
   return (
     <div className="w-full max-w-7xl mx-auto px-6 pt-16 pb-20 overflow-hidden">
@@ -86,7 +94,6 @@ function VulnHub() {
         </div>
       </div>
 
-      {/* Search bar */}
       <div className="max-w-xl mx-auto mb-8">
         <input
           type="text"

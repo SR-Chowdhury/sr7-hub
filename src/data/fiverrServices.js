@@ -1,0 +1,58 @@
+export const fiverrProfile = {
+  username: '@sr7sec',
+  profileUrl: 'https://www.fiverr.com/sr7sec',
+  tagline: 'Cybersecurity Specialist, Web Security & Penetration Testing',
+  responseTime: 'Within 24 hours',
+  memberSince: '2026',
+  location: 'United Kingdom',
+}
+
+export const fiverrGigs = [
+  {
+    id: 'wp-malware-removal',
+    title: 'WordPress Malware Removal',
+    price: 'Coming Soon',
+    delivery: 'TBD',
+    status: 'active',
+    summary: 'Full malware removal service for WordPress. I clean infected files, restore core files, remove backdoors, and harden your site to prevent reinfection.',
+    deliverables: [
+      'Full malware scan and removal',
+      'WordPress core file restoration',
+      'Backdoor and web shell cleanup',
+      'Plugin and theme review',
+      'Login hardening',
+      'Before and after report',
+    ],
+    tags: ['WordPress', 'Malware', 'Cleanup'],
+  },
+  {
+    id: 'gig-2-placeholder',
+    title: 'Coming Soon',
+    price: 'TBD',
+    delivery: 'TBD',
+    status: 'placeholder',
+    summary: 'Service description coming soon.',
+    deliverables: [],
+    tags: ['Coming Soon'],
+  },
+  {
+    id: 'gig-3-placeholder',
+    title: 'Coming Soon',
+    price: 'TBD',
+    delivery: 'TBD',
+    status: 'placeholder',
+    summary: 'Service description coming soon.',
+    deliverables: [],
+    tags: ['Coming Soon'],
+  },
+  {
+    id: 'gig-4-placeholder',
+    title: 'Coming Soon',
+    price: 'TBD',
+    delivery: 'TBD',
+    status: 'placeholder',
+    summary: 'Service description coming soon.',
+    deliverables: [],
+    tags: ['Coming Soon'],
+  },
+]

@@ -51,6 +51,6 @@ export const cards = [
     description: 'Web application penetration testing and vulnerability assessment. Available on @sr7sec.',
     tags: ['Pentesting', 'Freelance'],
     aliases: ['fiverr', 'freelance', 'sr7sec', 'gig', 'pentest', 'pentesting'],
-    link: '#',
+    link: '/fiverr',
   },
 ]

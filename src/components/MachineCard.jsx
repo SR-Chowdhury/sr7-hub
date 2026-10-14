@@ -3,10 +3,10 @@ function MachineCard({
   difficulty,
   os,
   summary,
-  ports,
-  tools,
-  phases,
-  keyFindings,
+  ports = [],
+  tools = [],
+  phases = [],
+  keyFindings = [],
   flag,
   remediation,
   notes,
@@ -98,7 +98,7 @@ function MachineCard({
                 {phase.title}
               </h3>
               <div className="space-y-2 w-full max-w-full min-w-0">
-                {phase.steps.map((step, i) => (
+                {(phase.steps || []).map((step, i) => (
                   <div key={i} className="w-full max-w-full min-w-0">
                     <p className="text-sm text-[#8b98a8] break-words">
                       • {step.text}

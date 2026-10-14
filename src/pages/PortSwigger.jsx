@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import FilterBar from '../components/FilterBar'
 import LabCard from '../components/LabCard'
 import Pagination from '../components/Pagination'
-import { portswiggerLabs } from '../data/portswiggerLabs'
+import Loader from '../components/Loader'
+import ErrorBox from '../components/ErrorBox'
+import { labs } from '../lib/api'
+import { useResource } from '../lib/useResource'
 
 const MAX_QUERY_LENGTH = 100
 const ITEMS_PER_PAGE = 5
@@ -20,20 +23,24 @@ function sanitize(raw) {
 function scoreLab(lab, query) {
   if (query === '') return 1
   let score = 0
-  if (lab.title.toLowerCase().includes(query)) score += 10
-  if (lab.category.toLowerCase().includes(query)) score += 8
-  if (lab.difficulty.toLowerCase().includes(query)) score += 6
-  if (lab.summary.toLowerCase().includes(query)) score += 3
+  if (lab.title?.toLowerCase().includes(query)) score += 10
+  if (lab.category?.toLowerCase().includes(query)) score += 8
+  if (lab.difficulty?.toLowerCase().includes(query)) score += 6
+  if (lab.summary?.toLowerCase().includes(query)) score += 3
   return score
 }
 
 function PortSwigger() {
+  const { data: portswiggerLabs = [], loading, error } = useResource(
+    () => labs.list({ limit: 500 }),
+    []
+  )
+
   const [searchQuery, setSearchQuery] = useState('')
   const [difficulty, setDifficulty] = useState('all')
   const [category, setCategory] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
 
-  // Filter + score
   const filteredLabs = useMemo(() => {
     const query = sanitize(searchQuery)
 
@@ -47,14 +54,12 @@ function PortSwigger() {
       })
       .sort((a, b) => b.score - a.score)
       .map(({ lab }) => lab)
-  }, [searchQuery, difficulty, category])
+  }, [portswiggerLabs, searchQuery, difficulty, category])
 
-  // Reset to page 1 on filter change
   useEffect(() => {
     setCurrentPage(1)
   }, [searchQuery, difficulty, category])
 
-  // Pagination math
   const totalPages = Math.max(1, Math.ceil(filteredLabs.length / ITEMS_PER_PAGE))
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
   const endIndex = startIndex + ITEMS_PER_PAGE
@@ -65,6 +70,9 @@ function PortSwigger() {
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  if (loading) return <Loader label="Loading labs…" />
+  if (error) return <ErrorBox error={error} />
 
   return (
     <div className="w-full max-w-7xl mx-auto px-6 pt-16 pb-20 overflow-hidden">
@@ -84,11 +92,11 @@ function PortSwigger() {
           PortSwigger Lab Solutions
         </h1>
         <p className="text-[#8b98a8] text-base max-w-2xl mx-auto mb-8">
-          All 61 Apprentice labs documented. Each entry includes the lab criteria, payload, exploitation steps, and remediation notes.
+          All Apprentice labs documented. Each entry includes the lab criteria, payload, exploitation steps, and remediation notes.
         </p>
 
         <div className="flex justify-center gap-10 flex-wrap">
-          <Stat number="61" label="Apprentice" />
+          <Stat number={portswiggerLabs.length.toString()} label="Labs" />
           <Stat number="4" label="Practitioner" />
           <Stat number="#56,379" label="Hall of Fame" />
         </div>

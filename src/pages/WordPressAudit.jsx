@@ -2,7 +2,10 @@ import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import AuditCard from '../components/AuditCard'
 import Pagination from '../components/Pagination'
-import { wordpressAudits } from '../data/audits'
+import Loader from '../components/Loader'
+import ErrorBox from '../components/ErrorBox'
+import { audits } from '../lib/api'
+import { useResource } from '../lib/useResource'
 
 const MAX_QUERY_LENGTH = 100
 const ITEMS_PER_PAGE = 5
@@ -19,15 +22,20 @@ function sanitize(raw) {
 function scoreAudit(audit, query) {
   if (query === '') return 1
   let score = 0
-  if (audit.title.toLowerCase().includes(query)) score += 10
-  if (audit.category.toLowerCase().includes(query)) score += 8
-  if (audit.client.toLowerCase().includes(query)) score += 6
-  if (audit.summary.toLowerCase().includes(query)) score += 4
-  if (audit.tools.some((t) => t.toLowerCase().includes(query))) score += 3
+  if (audit.title?.toLowerCase().includes(query)) score += 10
+  if (audit.category?.toLowerCase().includes(query)) score += 8
+  if (audit.client?.toLowerCase().includes(query)) score += 6
+  if (audit.summary?.toLowerCase().includes(query)) score += 4
+  if (audit.tools?.some((t) => t.toLowerCase().includes(query))) score += 3
   return score
 }
 
 function WordPressAudit() {
+  const { data: wordpressAudits = [], loading, error } = useResource(
+    () => audits.list({ limit: 500 }),
+    []
+  )
+
   const [searchQuery, setSearchQuery] = useState('')
   const [category, setCategory] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
@@ -46,7 +54,7 @@ function WordPressAudit() {
       })
       .sort((a, b) => b.score - a.score)
       .map(({ audit }) => audit)
-  }, [searchQuery, category])
+  }, [wordpressAudits, searchQuery, category])
 
   useEffect(() => {
     setCurrentPage(1)
@@ -62,6 +70,9 @@ function WordPressAudit() {
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  if (loading) return <Loader label="Loading audits…" />
+  if (error) return <ErrorBox error={error} />
 
   return (
     <div className="w-full max-w-7xl mx-auto px-6 pt-16 pb-20 overflow-hidden">
@@ -91,7 +102,6 @@ function WordPressAudit() {
         </div>
       </div>
 
-      {/* Filter bar */}
       <section className="max-w-6xl mx-auto py-5">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-3">
           <input
