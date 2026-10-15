@@ -30,25 +30,18 @@ function About() {
 
       {/* Bio */}
       <p className="text-[#8b98a8] text-base leading-relaxed mb-4 prose-justify">
-        I'm a cybersecurity researcher focused on{' '}
-        <strong className="text-white font-semibold">web application security</strong>,{' '}
-        <strong className="text-white font-semibold">WordPress hardening</strong>, and
-        full-stack development. I document my work publicly — every lab, machine, and
-        audit — so other people can learn the same way I did.
+        My background in software development shapes how I approach security. Understanding how applications are built helps me investigate how they can fail, identify weaknesses, and think critically about practical remediation.
       </p>
 
       <p className="text-[#8b98a8] text-base leading-relaxed mb-4 prose-justify">
-        My journey started with building web applications, then pivoting to breaking them.
-        That "build then break" perspective shapes how I approach security work: I understand
-        where vulnerabilities hide because I've written the same code that caused them.
+        I'm focused on {' '}<strong className="text-white font-semibold">web application security, WordPress security, and full-stack development.</strong> I document my work publicly through security labs, machine assessments, and audit write-ups, turning hands-on practice into technical knowledge that others can learn from.
       </p>
 
       <p className="text-[#8b98a8] text-base leading-relaxed mb-4 prose-justify">
-        Currently working through{' '}
+        I'm currently developing my skills through{' '}
         <strong className="text-white font-semibold">PortSwigger Web Security Academy</strong>,{' '}
         <strong className="text-white font-semibold">Hack The Box</strong>, and{' '}
-        <strong className="text-white font-semibold">VulnHub</strong> labs, alongside
-        freelance security work on Fiverr.
+        <strong className="text-white font-semibold">VulnHub</strong> labs, while building SR7 Hub as a central portfolio for my security research, development projects, and technical documentation.
       </p>
 
       {/* Focus areas */}
@@ -67,11 +60,11 @@ function About() {
         />
         <SkillCard
           title="Offensive Tooling"
-          tags={['Burp Suite', 'nmap', 'sqlmap', 'Metasploit', 'Wireshark']}
+          tags={['Burp Suite', 'Nmap', 'sqlmap', 'Metasploit', 'Wireshark']}
         />
         <SkillCard
           title="Development"
-          tags={['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind']}
+          tags={['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS']}
         />
       </div>
 
