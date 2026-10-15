@@ -27,6 +27,8 @@ import AuditForm from './admin/AuditForm'
 import GigsList from './admin/GigsList'
 import GigForm from './admin/GigForm'
 import ProfileEditor from './admin/ProfileEditor'
+import About from './pages/About'
+import WriteupsHub from './pages/WriteupsHub'
 
 const search = createSearchEngine(cards)
 
@@ -68,6 +70,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<PublicLayout />}>
+          <Route path="/about" element={<About />} />
+          <Route path="/writeups" element={<WriteupsHub />} />
           <Route path="/" element={<Home />} />
           <Route path="/portswigger" element={<PortSwigger />} />
           <Route path="/vulnhub" element={<VulnHub />} />

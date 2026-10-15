@@ -14,17 +14,23 @@ function Navbar() {
 
         <div className="flex items-center gap-7">
           <Link
-            to="/portswigger"
+            to="/about"
+            className="text-sm font-medium text-[#8b98a8] hover:text-white transition-colors"
+          >
+            About
+          </Link>
+          <Link
+            to="/writeups"
             className="text-sm font-medium text-[#8b98a8] hover:text-white transition-colors"
           >
             Writeups
           </Link>
-          <a
-            href="#projects"
+          <Link
+            to="/fiverr"
             className="text-sm font-medium text-[#8b98a8] hover:text-white transition-colors"
           >
-            Projects
-          </a>
+            Services
+          </Link>
           <a
             href="#contact"
             className="text-sm font-medium text-[#00e07a] border border-[#00e07a] px-4 py-1.5 rounded-md hover:bg-[#00e07a]/10 transition-colors"
