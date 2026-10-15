@@ -61,14 +61,14 @@ Built with React and Vite, the frontend provides a searchable interface for tech
   </tr>
 </table>
 
-| Technology | Layer | Purpose |
-|---|---|---|
-| React 19 | UI | Component-based user interface library |
-| Vite | Build | Fast dev server and production bundler |
-| React Router v7 | Routing | Client-side navigation and route protection |
-| Tailwind CSS v4 | Styling | Utility-first CSS framework |
-| Fetch API | Networking | Native browser HTTP client for API calls |
-| Vercel | Hosting | Frontend deployment with automatic CI/CD |
+| Technology | Purpose |
+|---|---|
+| React 19 | User interface |
+| Vite | Development server and build tooling |
+| React Router v7 | Client-side routing |
+| Tailwind CSS v4 | Styling |
+| Fetch API | HTTP requests to the backend |
+| Vercel | Frontend deployment |
 
 ## Architecture
 
