@@ -61,16 +61,14 @@ Built with React and Vite, the frontend provides a searchable interface for tech
   </tr>
 </table>
 
-## Technology Stack
-
-| Technology | Purpose |
-|---|---|
-| React 19 | User interface |
-| Vite | Development server and build tooling |
-| React Router v7 | Client-side routing |
-| Tailwind CSS v4 | Styling |
-| Fetch API | HTTP requests to the backend |
-| Vercel | Frontend deployment |
+| Technology | Layer | Purpose |
+|---|---|---|
+| React 19 | UI | Component-based user interface library |
+| Vite | Build | Fast dev server and production bundler |
+| React Router v7 | Routing | Client-side navigation and route protection |
+| Tailwind CSS v4 | Styling | Utility-first CSS framework |
+| Fetch API | Networking | Native browser HTTP client for API calls |
+| Vercel | Hosting | Frontend deployment with automatic CI/CD |
 
 ## Architecture
 
@@ -106,26 +104,26 @@ https://sr7-hub-backend.onrender.com/api
 
 ### Public Routes
 
-| Route | Description |
-|---|---|
-| `/` | Homepage |
-| `/portswigger` | PortSwigger lab solutions |
-| `/htb` | Hack The Box machines |
-| `/vulnhub` | VulnHub walkthroughs |
-| `/wordpress-audit` | WordPress audit reports |
-| `/fiverr` | Freelance services and profile |
+| Route | Section | Description |
+|---|---|---|
+| `/` | Home | Landing page with search and featured content |
+| `/portswigger` | Labs | PortSwigger Web Security Academy lab solutions |
+| `/htb` | Machines | Hack The Box machine writeups and methodology |
+| `/vulnhub` | Walkthroughs | VulnHub boot2root walkthroughs from recon to root |
+| `/wordpress-audit` | Reports | WordPress security audit case studies and findings |
+| `/fiverr` | Services | Freelance service listings and profile information |
 
 ### Admin Routes
 
-| Route | Purpose |
-|---|---|
-| `/admin/login` | Admin login |
-| `/admin/labs` | Manage PortSwigger labs |
-| `/admin/machines` | Manage Hack The Box machines |
-| `/admin/walkthroughs` | Manage VulnHub walkthroughs |
-| `/admin/audits` | Manage WordPress audits |
-| `/admin/gigs` | Manage freelance service listings |
-| `/admin/profile` | Manage Fiverr profile information |
+| Route | Access | Purpose |
+|---|---|---|
+| `/admin/login` | Public | Admin login form |
+| `/admin/labs` | JWT | Manage PortSwigger lab solutions |
+| `/admin/machines` | JWT | Manage Hack The Box machine writeups |
+| `/admin/walkthroughs` | JWT | Manage VulnHub walkthroughs |
+| `/admin/audits` | JWT | Manage WordPress audit reports |
+| `/admin/gigs` | JWT | Manage freelance service listings |
+| `/admin/profile` | JWT | Manage Fiverr profile information |
 
 > The admin panel requires a user account in the backend database, created via the backend's `create:admin` script. There is no public signup.
 
